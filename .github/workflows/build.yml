@@ -1,0 +1,40 @@
+name: Build
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    name: Build
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup Java
+      uses: actions/setup-java@v1
+      with:
+        java-version: 8
+        architecture: x64
+
+    - name: Maven Build
+      run: mvn -B package
+
+    # Building EaaS-base-image because it is not on DockerHub yet
+    - name: Checkout EaaS-base-image
+      uses: actions/checkout@v2
+      with:
+        repository: "ExplorViz/EaaS-base-image"
+        path: "EaaS-base-image"
+    - name: Build EaaS-base-image
+      run: ./build-all.sh
+      working-directory: EaaS-base-image
+
+    - name: ExplorViz as a Service
+      run: ./submit-eaas.sh
+      env:
+        IMAGE_CONTEXT: .
+        IMAGE_DOCKERFILE: eaas-image/Dockerfile
+        BUILD_NAME: "Build #${{ github.run_number }}"
+        EAAS_URL: ${{ secrets.EAAS_URL }}
+        EAAS_PROJECT: ${{ secrets.EAAS_PROJECT }}
+        EAAS_SECRET: ${{ secrets.EAAS_SECRET }}
