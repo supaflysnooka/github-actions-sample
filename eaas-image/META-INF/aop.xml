@@ -1,0 +1,25 @@
+<!DOCTYPE aspectj PUBLIC "-//AspectJ//DTD//EN" "http://www.aspectj.org/dtd/aspectj_1_5_0.dtd">
+<aspectj>
+	<weaver options="-verbose"> <!-- options="-verbose -showWeaveInfo -Xjoinpoints:synchronization" -->
+		<!--
+			 Use * to consider all classes in all packages. In this case you usually need to explicitly exclude
+             some libraries below.
+		-->
+		<include within="org.springframework.samples.petclinic..*"/>
+
+		<!--
+		     Important: The logger library that is configured to be used by Kieker must always be excluded!
+		     (Particularly important when using the include-all directive from above.)
+		-->
+		<exclude within="org.apache.commons.logging..*" />
+		<exclude within="org.slf4j..*" />
+		<exclude within="java.util.logging..*" />
+		<exclude within="org.apache.log4j..*" />
+	</weaver>
+
+	<aspects>
+		<!-- <aspect name="kieker.monitoring.probe.aspectj.flow.operationExecution.FullInstrumentation" /> -->
+		<aspect name="kieker.monitoring.probe.aspectj.flow.operationExecution.FullInstrumentationNoGetterAndSetter" />
+		<aspect name="kieker.monitoring.probe.aspectj.database.Fullinstrumentation" />
+	</aspects>
+</aspectj>
