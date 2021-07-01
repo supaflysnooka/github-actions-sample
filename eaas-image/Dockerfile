@@ -7,7 +7,6 @@ RUN apk add --no-cache curl \
  && set-kieker-property kieker.monitoring.applicationName "Spring PetClinic"
 
 COPY eaas-image /opt/app/
-#COPY target/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar /opt/app/
 COPY target/spring-petclinic-2.2.0.BUILD-SNAPSHOT.tar /opt/app/
 RUN tar xvf /opt/app/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar
 

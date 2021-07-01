@@ -35,12 +35,3 @@ jobs:
       run: ./build-all.sh
       working-directory: EaaS-base-image
 
-    - name: ExplorViz as a Service
-      run: ./submit-eaas.sh
-      env:
-        IMAGE_CONTEXT: .
-        IMAGE_DOCKERFILE: eaas-image/Dockerfile
-        BUILD_NAME: "Build #${{ github.run_number }}"
-        EAAS_URL: ${{ secrets.EAAS_URL }}
-        EAAS_PROJECT: ${{ secrets.EAAS_PROJECT }}
-        EAAS_SECRET: ${{ secrets.EAAS_SECRET }}
