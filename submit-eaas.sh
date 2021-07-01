@@ -16,9 +16,8 @@ echo "Building image" >&2
 IMAGE_ID="$(docker build -q -f "${IMAGE_DOCKERFILE:-Dockerfile}" "${IMAGE_CONTEXT:-.}")"
 echo "Built image: $IMAGE_ID" >&2
 
-#echo "Uploading to EaaS with name: $BUILD_NAME" >&2
-#BUILD_ID="$(docker image save "$IMAGE_ID" | curl -fsS -X POST -H "X-EaaS-Secret: $EAAS_SECRET" \
-#      -F "name=$BUILD_NAME" -F "imageID=$IMAGE_ID" -F "image=@-" "$EAAS_URL/api/v1/projects/$EAAS_PROJECT/builds")"
+echo "Uploading to EaaS with name: $BUILD_NAME" >&2
+BUILD_ID="$(docker image save "$IMAGE_ID"  -F "name=$BUILD_NAME" -F "imageID=$IMAGE_ID" -F "image=@-" -o $IMAGE_ID.tar"
 echo "This build has ID #$BUILD_ID" >&2
 
 # Optional; if your EaaS instance runs on the same machine as you CI builds then you MUST comment this out
