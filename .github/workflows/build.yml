@@ -9,20 +9,22 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-
+    on:
+      # Trigger the workflow on push or pull request,
+      # but only for the main branch
+    push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
     - name: Setup Java
       uses: actions/setup-java@v1
       with:
         java-version: 8
         architecture: x64
 
-    - name: Maven Version
-      run: mvn versions:set -DnewVersion=2.2.0.BUILD
     - name: Maven Build
-      run: mvn -B package
-    - name: Maven Version Snapshot
-      run: mvn versions:set -DnewVersion=2.2.1.BUILD-SNAPSHOT
-    - name: Maven Build Snapshot
       run: mvn -B package
 
     # Building EaaS-base-image because it is not on DockerHub yet
