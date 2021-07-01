@@ -15,11 +15,6 @@
   <name>petclinic</name>
 
   <properties>
-    <scm>
-      <developerConnection>
-          scm:git:git@github.com:supaflysnooka/github-actions-sample.git
-      </developerConnection>
-    </scm>
     <!-- Generic properties -->
     <java.version>1.8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

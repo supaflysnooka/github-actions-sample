@@ -17,7 +17,10 @@ jobs:
         architecture: x64
 
     - name: Maven Build
-      run: mvn -B release:prepare release:perform package
+      run: mvn versions:set -DnewVersion=2.2.0.BUILD
+      run: mvn -B package
+      run: mvn versions:set -DnewVersion=2.2.0.BUILD-SNAPSHOT
+      run: mvn -B package
 
     # Building EaaS-base-image because it is not on DockerHub yet
     - name: Checkout EaaS-base-image
